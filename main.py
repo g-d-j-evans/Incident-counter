@@ -70,7 +70,7 @@ def axis_generator(start, end, delta):
 
 
 def checker(data_file, start, end, intervals, types2):
-    num_lines = sum(1 for line in open(datafile,'r'))
+    num_lines = sum(1 for line in open(datafile, 'r'))
     with open(data_file, mode='r') as csv_file:
         items_to_check = csv.DictReader(csv_file)
         period_to_check = data_set(start, end, intervals, types2)
@@ -115,4 +115,3 @@ output_file = str(input('Enter the full name (excluding file type) of the file y
 types = type_creator(datafile)
 result = checker(datafile, start_time, end_time, interval, types)
 csv_writer(output_file, result)
-
