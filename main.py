@@ -5,7 +5,7 @@ import csv
 import os
 from datetime import datetime, timedelta
 from datetimerange import DateTimeRange
-# from matplotlib import pyplot as plt
+from matplotlib import pyplot as plt
 from tqdm import tqdm
 
 
@@ -95,6 +95,16 @@ def checker(data_file, start, end, intervals, types2):
         return period_to_check
 
 
+def csv_writer(output_file_name, data_export):
+    types.insert(0, 'Time Period')
+    columns = types
+    with open(output_file_name + '.csv', 'w') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=columns)
+        writer.writeheader()
+        for data in data_export:
+            writer.writerow(data)
+
+
 directory = os.getcwd()
 files = os.listdir(directory)
 start_time = datetime.strptime(input('Enter start of time period (DD/MM/YYYY HH:MM:SS): \n '), '%d/%m/%Y %H:%M:%S')
@@ -104,12 +114,5 @@ datafile = file_selector(files)
 output_file = str(input('Enter the full name (excluding file type) of the file you want creating: \n'))
 types = type_creator(datafile)
 result = checker(datafile, start_time, end_time, interval, types)
-#print(result)
+csv_writer(output_file, result)
 
-types.insert(0, 'Time Period')
-columns = types
-with open(output_file + '.csv', 'w') as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=columns)
-    writer.writeheader()
-    for data in result:
-        writer.writerow(data)
